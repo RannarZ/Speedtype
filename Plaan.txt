@@ -1,0 +1,37 @@
+Programmi osad:
+
+1.Kaks valikut testide osas:
+   1) Võimalus teha testi tekstiga (Kus on ka kirjavahemärgid ning tekst on mõttestatud)
+   2) Võimalus teha testi suvaliste sõnadega
+
+2.Kasutajal on võimalik lisada oma tekste "andmebaasi", kust hiljem programm valib suvaliselt teksti
+3.Kasutajal on ka võimalik valida tekstide hulgast ning ise sisestada tekst, millel ta testi sooritab
+4.Näitab parimaid tulemusi ning ka mis tekstidel saavutatud. Kindlate tekstide ja suvaliste sõnade jaoks eraldi edetabel.
+
+Tööetapid:
+
+1.Luua aken peamenüüga (Valikud kas tekstiga või suvaliselt, edetabeli vaatamise võimalus, oma teksti lisamine)
+
+2.Testi aken (Kirjutamise lahter, teksti lahter, nupud erinevate valikutega, alguse aja loendur)
+
+3.Lisada mingid algsed tekstid 
+
+4.Kirjutamise ajased funktsioonid ja sõnade lugemine (tuvastab millal valesti ja teatab kuidagi, piirab edasi kirjutust kui on vale umbes 10 tähte, aja pidamine)
+
+5.Tulemuse salvestamine
+
+6.Suvalise teksti funktsioon ning suvaliste sõnade variant (Suvaliste sõnade jaoks peab ta ka lugema aega minutist alla)
+
+7.Edetabeli loomine (suudaks salvestada millise tekstiga tuli rekord ning kui palju on ja kes tegi, suvaliste sõnadega eraldi edetabel)
+
+8.Kasutaja oma tekstide lisamine (funktsioon, mis salvestab tekstid kuskile, et ka peale kinni panemist ja avamist saaks neid samu tekste kätte. Sammuti ka tekstide kustutamise funktsioon)
+
+9.Kasutajal võimalus valida ise tekst, millega soovib testi teha.
+
+10.Vaheaken peamenüü ning testi vahele, mis laseb valida erinevate variantide vahel (kas suvaline tekst, suvalised sõnad või mõni kindel tekst.)
+
+11.Kindla teksti korral võimalus otsida teksti
+
+
+
+
