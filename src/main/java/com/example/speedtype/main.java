@@ -6,11 +6,14 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+
+import java.security.Key;
 
 public class main extends Application {
 
@@ -49,24 +52,41 @@ public class main extends Application {
         vAlignment.getChildren().add(test);
 
 
-        textBox.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.SPACE)
-                textBox.setText(null);
-            if(event.getCode() == KeyCode.BACK_SPACE
-                    && writing.getIndex() != 0
-                    && !writing.getWrittenText().toString().equals("")) {
-                writing.removeFromIndex();
-                writing.removeFromWritten();
-                System.out.println(writing.getWrittenText());
-                System.out.println(writing.getIndex());
-            }
-            else {
-                writing.addToWritten(event.getCharacter().toLowerCase());
-                writing.addToIndex();
-                System.out.println(writing.getWrittenText());
-                System.out.println(writing.getIndex());
+        textBox.setOnKeyReleased(event -> {
 
-            }
+                    if (!event.getText().isBlank() || event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.SPACE) {
+                        int index = writing.getIndex();
+
+                        if (event.getCode().equals(KeyCode.SPACE)) { //Deleting last writing from textBox
+                            textBox.setText(null);
+                            if (index != -1 && !(writing.getWrittenText().charAt(index) == ' ')) { // Check whether last symbol in users writing is empty space
+                                writing.addToWritten(event.getText());
+                                writing.addToIndex();
+                            }
+
+                        } else if (event.getCode() == KeyCode.BACK_SPACE) { //Deleting symbols
+                            if (index > -1) {
+                                writing.removeFromIndex();
+                                writing.removeFromWritten();
+                            }
+
+                        } else {
+                            if (event.isShiftDown() || event.isShortcutDown()) { //Checks whether shift key or AltGR key is pressed down
+                                //Then takse symbol from textBox
+                                writing.addToWritten(Character.toString(textBox.getCharacters().charAt(textBox.getCharacters().length() - 1)));
+                            }
+                            else {
+                                writing.addToWritten(event.getText());
+                            }
+                            writing.addToIndex();
+                        }
+                        //Siin viga veel TEGELE!!!!
+                        if (writing.sameSymbolCheck() == -1) { //Checks whether last symbol entered is the same as the corresponding symbol in given text
+                            testScene.setFill(Color.RED);
+                        }
+                        System.out.println(writing.getWrittenText());
+                        System.out.println(writing.getIndex());
+                    }
                 }
                 );
 
