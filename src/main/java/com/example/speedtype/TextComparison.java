@@ -8,7 +8,7 @@ public class TextComparison {
     private boolean match = true;
     private int[] mistakeIndex = {-1, -1, -1, -1, -1, -1, -1, -1};
     private int nrOfMistakes = -1;
-
+    private int lastCorrect = -1;
 
     TextComparison(String baseText) {
         this.baseText = baseText;
@@ -46,6 +46,11 @@ public class TextComparison {
         return nrOfMistakes;
     }
 
+    public int getLastCorrect() {
+        return lastCorrect;
+    }
+
+
     public void addToIndex() {
         this.index++;
     }
@@ -60,6 +65,11 @@ public class TextComparison {
 
     public void setMatchFalse(){
         match = false;
+    }
+
+
+    public void setLastCorrect(int lastCorrect) {
+        this.lastCorrect = lastCorrect;
     }
 
     public void addToMistakeArray(int index) {

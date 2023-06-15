@@ -2,6 +2,7 @@ package com.example.speedtype;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -52,31 +53,36 @@ public class main extends Application {
         vAlignment.getChildren().add(test);
 
         textBox.setOnKeyReleased(event -> {
+            //KUI VIGA TULEB PEALE TEKSTI LÕPPU, SIIS LASEB LÕPETADA.
+                    if (writing.getWrittenText().length() == writing.getBaseText().length() && writing.getNrOfMistakes() == -1){ //Checks whether full text is written
+                      textBox.setText(null);
+                      textBox.setEditable(false);
+                      System.out.println("tehtud");
+                    }
 
-                    if (!event.getText().isBlank() || event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.SPACE) {
+                    else if (!event.getText().isBlank() || event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.SPACE) {
                         int index = writing.getIndex();
                         int mistakes = writing.getNrOfMistakes();
 
-                        //Cursor läheb algusesse
-                        if (mistakes == 7) {
-                            textBox.setText(writing.getWrittenText().toString());
-                        }
-                        else {
+                            //SPACE BAR PRESS
                             if (event.getCode().equals(KeyCode.SPACE) && writing.getMatch()) { //Deleting last writing from textField
                                 textBox.clear();
-                                if (index != -1 && !(writing.getWrittenText().charAt(index) == ' ')) { // Check whether last symbol in users writing is empty space
-                                    writing.addToWritten(event.getText());
-                                    writing.addToIndex();
+                                if (!(mistakes >= 7)) {//Checks whether mistake Array is full or not
+                                    if (index != -1 && !(writing.getWrittenText().charAt(index) == ' ')) { // Check whether last symbol in users writing is empty space
+                                        writing.addToWritten(event.getText());
+                                        writing.addToIndex();
+                                        writing.setLastCorrect(index + 1); //Changes last deletable index to last correct spacebar press
+                                    }
+                                    if (writing.sameSymbolCheck() != -1) {
+                                        writing.addToMistakeArray(writing.sameSymbolCheck());
+                                        writing.setMatchFalse();
+                                    }
                                 }
-                                if (writing.sameSymbolCheck() != -1) {
-                                    writing.addToMistakeArray(writing.sameSymbolCheck());
-                                    writing.setMatchFalse();
-                                }
-
                             }
 
+                            //BACKSPACE PRESS
                             else if (event.getCode() == KeyCode.BACK_SPACE) { //Deleting symbols
-                                if (index > -1) {
+                                if (index > -1 && index != writing.getLastCorrect()) {
                                     writing.removeFromIndex();
                                     writing.removeFromWritten();
                                     int indexInArray = containsNr(writing.getMistakeIndex(), index);
@@ -90,31 +96,36 @@ public class main extends Application {
                                     }
                                 }
 
-                            } else {
-                                if (event.isShiftDown() || event.isShortcutDown()) { //Checks whether shift key or AltGR key is pressed down
-                                    //Then takse symbol from textBox
-                                    writing.addToWritten(Character.toString(textBox.getCharacters().charAt(textBox.getCharacters().length() - 1)));
-                                } else {
-                                    writing.addToWritten(event.getText());
+                            }
 
+                            //ANY OTHER KEY PRESS
+                            else {
+                                if (!(mistakes >= 7)) {
+                                    if (event.isShiftDown() || event.isShortcutDown()) { //Checks whether shift key or AltGR key is pressed down
+                                        //Then takse symbol from textBox
+                                        writing.addToWritten(Character.toString(textBox.getCharacters().charAt(textBox.getCharacters().length() - 1)));
+                                    } else {
+                                        writing.addToWritten(event.getText());
+
+                                    }
+                                    if (writing.sameSymbolCheck() != -1) {
+                                        writing.addToMistakeArray(writing.sameSymbolCheck());
+                                        writing.setMatchFalse();
+                                    }
+                                    writing.addToIndex();
                                 }
-                                if (writing.sameSymbolCheck() != -1) {
-                                    writing.addToMistakeArray(writing.sameSymbolCheck());
-                                    writing.setMatchFalse();
+                            }
+                                //Siin viga veel TEGELE!!!!
+                                if (!writing.getMatch()) { //Checks whether last symbol entered is the same as the corresponding symbol in given text
+                                    testScene.setFill(Color.RED);
+                                } else {
+                                    testScene.setFill(Color.WHITE);
                                 }
-                                writing.addToIndex();
+                                System.out.println(writing.getWrittenText());
+                                System.out.println(writing.getIndex());
+                        System.out.println(writing.getLastCorrect());
                             }
-                            //Siin viga veel TEGELE!!!!
-                            if (!writing.getMatch()) { //Checks whether last symbol entered is the same as the corresponding symbol in given text
-                                testScene.setFill(Color.RED);
-                            } else {
-                                testScene.setFill(Color.WHITE);
-                            }
-                            System.out.println(writing.getWrittenText());
-                            System.out.println(writing.getIndex());
                         }
-                    }
-                }
                 );
 
 
