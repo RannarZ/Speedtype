@@ -4,7 +4,7 @@ public class TextComparison {
 
     private final String baseText;
     private StringBuilder writtenText = new StringBuilder();
-    private int index = -1;
+    private int index = 0;
     private boolean match = true;
     private int[] mistakeIndex = {-1, -1, -1, -1, -1, -1, -1, -1};
     private int nrOfMistakes = -1;
