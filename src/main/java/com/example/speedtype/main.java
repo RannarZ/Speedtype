@@ -12,6 +12,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class main extends Application {
@@ -21,17 +24,17 @@ public class main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Group root = new Group();
         Scene testScene = new Scene(root,700, 700);
-        TextComparison writing = new TextComparison("Eile oli ilus päev, aga täna oli väga palav. Loodame, et homme on parem päev.");
-
-
+        TextComparison writing = new TextComparison("Following after the old man, Frink pushed open the big metal door to the main work area. The rumble of machinery, which he had heard around him every day for so long - sight of men at the machines, air filled with flash of light, waste dust, movement. There went the old man. Frink increased his pace.");
 
         TextField textBox = new TextField();
         textBox.setPrefWidth(500);
         TextFlow baseTextBox = new TextFlow();
 
+
         Text sampleText = new Text(writing.getBaseText());//Sample text
         sampleText.setFill(Color.RED);
         baseTextBox.getChildren().add(sampleText);
+        baseTextBox.setPrefWidth(500);
         TextFlow test = new TextFlow();
 
         TextFlow userTxt = new TextFlow(); //User text
@@ -83,9 +86,14 @@ public class main extends Application {
      * @param testScene Scene where this takes place.
      */
     public static void mainTest(TextComparison writing, TextField textBox, Scene testScene) {
-        //Ei tuvasta caps locki iga kord. PARANDA!!!
-        //Kui hoida backspace all ja samal ajal kirjutada, siis lahti lastes kustutab backspace ära tolle (ehk kaks kustutust ühe vajutusega)
+        //Ei tuvasta caps locki iga kord.
         AtomicLong startTime = new AtomicLong();
+        textBox.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.BACK_SPACE) {
+                textBox.setEditable(false);
+            }
+        });
+
         textBox.setOnKeyReleased(event -> {
 
                     if (writing.getIndex() == 0) {
@@ -96,7 +104,7 @@ public class main extends Application {
                         int mistakes = writing.getNrOfMistakes();
 
                         //SPACE BAR PRESS
-                        if (event.getCode().equals(KeyCode.SPACE) && writing.getMatch() && writing.getBaseText().charAt(index) == ' ') { //Deleting last writing from textField
+                        if (event.getCode().equals(KeyCode.SPACE) && writing.getMatch() && writing.getBaseText().charAt(index) == ' ' && textBox.isEditable()) { //Deleting last writing from textField
                             textBox.clear();
 
                             if (!(mistakes >= 7)) {//Checks whether mistake Array is full or not
@@ -114,6 +122,7 @@ public class main extends Application {
 
                         //BACKSPACE PRESS
                         else if (event.getCode() == KeyCode.BACK_SPACE) { //Deleting symbols
+                            textBox.setEditable(true);
                             if (index > 0 && index != writing.getLastCorrect()) {
                                 writing.removeFromIndex();
                                 writing.removeFromWritten();
@@ -133,8 +142,7 @@ public class main extends Application {
 
                         //ANY OTHER KEY PRESS
                         else {
-                            if (!(mistakes >= 7)) {
-                                System.out.println(startTime.get());
+                            if (!(mistakes >= 7) && textBox.isEditable()) {
                                 if ((event.isShiftDown() || event.isShortcutDown())) { //Checks whether shift key or AltGR key is pressed down
                                     //Then takse symbol from textBox
                                     writing.addToWritten(Character.toString(textBox.getCharacters().charAt(textBox.getCharacters().length() - 1)));
@@ -159,17 +167,32 @@ public class main extends Application {
                     }
                     if (writing.getNrOfMistakes() == -1 && writing.getWrittenText().length() == writing.getBaseText().length()){ //Checks whether full text is written
                         textBox.setText(null);
-                        textBox.setEditable(false);
+                        textBox.setDisable(true);
 
-                        int words = writing.getBaseText().split(" ").length;
+                        double words = writing.getBaseText().split(" ").length;
                         long endTime = System.currentTimeMillis();
-                        double finalWPM = (((double) (endTime - startTime.get())  / 1000.0) / (double) words) * 60; //Calculates words per minute
+                        double finalWPM = words / ((double) (endTime - startTime.get()) / (1000.0 * 60.0)); //Calculates words per minute
 
                         System.out.println("Final WPM is " + Math.round(finalWPM));
                     }
-        }
+                }
         );
     }
+    /*
+    public static String getRandomText() throws IOException {
+        int nrOfTexts = Objects.requireNonNull(new File("texts_english").list()).length;
+        System.out.println(nrOfTexts);
+        double randomNr = Math.random();
+        int whatNrText = (int) (randomNr * nrOfTexts + 1);
+        String finalText = "";
+        try (BufferedReader bf = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream("NR" + whatNrText + ".txt"), StandardCharsets.UTF_8))) {
+            finalText = bf.readLine();
+        }
+        return finalText;
+    }
+     */
 
     public static void main(String[] args) {
         launch();

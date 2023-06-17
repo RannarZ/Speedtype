@@ -90,8 +90,8 @@ public class TextComparison {
      */
     public int sameSymbolCheck() {
         int writtenLast = writtenText.length() - 1;
-        if (writtenLast == - 1)
+        if (writtenLast == - 1 || writtenText.charAt(writtenLast) == baseText.charAt(writtenLast) || writtenText.charAt(writtenLast) == '\n')
             return -1;
-        return writtenText.charAt(writtenLast) == baseText.charAt(writtenLast) ? -1 : writtenLast;
+        return writtenLast;
     }
 }

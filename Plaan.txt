@@ -16,7 +16,7 @@ Tööetapid:
 
 3.Lisada mingid algsed tekstid 
 
-4.Kirjutamise ajased funktsioonid ja sõnade lugemine (tuvastab millal valesti ja teatab kuidagi, piirab edasi kirjutust kui on vale umbes 10 tähte, aja pidamine)
++4.Kirjutamise ajased funktsioonid ja sõnade lugemine (tuvastab millal valesti ja teatab kuidagi, piirab edasi kirjutust kui on vale umbes 10 tähte, aja pidamine)
 
 5.Tulemuse salvestamine
 
