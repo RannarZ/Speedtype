@@ -1,20 +1,21 @@
 package com.example.speedtype;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
+
 import java.util.concurrent.atomic.AtomicLong;
 
 public class main extends Application {
@@ -22,45 +23,42 @@ public class main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Group root = new Group();
-        Scene testScene = new Scene(root,700, 700);
-        TextComparison writing = new TextComparison("Following after the old man, Frink pushed open the big metal door to the main work area. The rumble of machinery, which he had heard around him every day for so long - sight of men at the machines, air filled with flash of light, waste dust, movement. There went the old man. Frink increased his pace.");
-
-        TextField textBox = new TextField();
-        textBox.setPrefWidth(500);
-        TextFlow baseTextBox = new TextFlow();
 
 
-        Text sampleText = new Text(writing.getBaseText());//Sample text
-        sampleText.setFill(Color.RED);
-        baseTextBox.getChildren().add(sampleText);
-        baseTextBox.setPrefWidth(500);
-        TextFlow test = new TextFlow();
+        Group rootMainMenu = new Group();
+        Scene mainMenu = new Scene(rootMainMenu, 700, 700);
 
-        TextFlow userTxt = new TextFlow(); //User text
-        Text written = new Text(writing.getWrittenText().toString());
-        userTxt.getChildren().add(written);
+        VBox alignment = new VBox();
+        alignment.setSpacing(100);
+        alignment.setLayoutX((mainMenu.getWidth() - 200 )/ 2);
 
+        Button speedType = new Button("Speedtype");
+        speedType.setPrefWidth(200);
+        speedType.setPrefHeight(50);
 
-        VBox vAlignment = new VBox();
-        vAlignment.setAlignment(Pos.CENTER);
-        vAlignment.setLayoutY(100);
-        vAlignment.setLayoutX(100);
-        vAlignment.setStyle("-fx-background-color : #000000;");
+        Button leaderboard = new Button("Leaderboard");
+        leaderboard.setPrefWidth(200);
+        leaderboard.setPrefHeight(50);
 
-        mainTest(writing, textBox,testScene);
+        Button addText = new Button("Add text");
+        addText.setPrefWidth(200);
+        addText.setPrefHeight(50);
 
-        vAlignment.getChildren().add(textBox);
-        vAlignment.getChildren().add(baseTextBox);
-        vAlignment.getChildren().add(test);
+        alignment.getChildren().addAll(speedType, leaderboard, addText);
 
 
 
 
 
+        rootMainMenu.getChildren().add(alignment);
 
-        root.getChildren().add(vAlignment);
-        primaryStage.setScene(testScene);
+        speedType.setOnMouseClicked(event -> {
+            mainTest(primaryStage);
+        });
+
+
+        primaryStage.setTitle("SpeedType");
+        primaryStage.setScene(mainMenu);
         primaryStage.show();
     }
 
@@ -81,13 +79,49 @@ public class main extends Application {
 
     /**
      * Main test algorithm. Method implements an lambda function
-     * @param writing Text comparison type object
-     * @param textBox TextField type object where the user writes
-     * @param testScene Scene where this takes place.
      */
-    public static void mainTest(TextComparison writing, TextField textBox, Scene testScene) {
+    public static void mainTest(Stage primaryStage) {
         //Ei tuvasta caps locki iga kord.
+        Group rootSpeedTestRandom = new Group();
+        Scene testScene = new Scene(rootSpeedTestRandom,700, 700);
+        TextComparison writing = new TextComparison("Following after the old man, Frink pushed open the big metal door to the main work area. The rumble of machinery, which he had heard around him every day for so long - sight of men at the machines, air filled with flash of light, waste dust, movement. There went the old man. Frink increased his pace.");
+
+        TextField textBox = new TextField();
+        textBox.setPrefWidth(500);
+
+        TextFlow baseTextBox = new TextFlow();
+        Text sampleText = new Text(writing.getBaseText());//Sample text
+        baseTextBox.getChildren().add(sampleText);
+        baseTextBox.setPrefWidth(500);
+
+
+        TextFlow userTxt = new TextFlow(); //User text
+        Text written = new Text(writing.getWrittenText().toString());
+        userTxt.getChildren().add(written);
+
+        Button returnButton = new Button("Return");
+        returnButton.setPrefWidth(75);
+        returnButton.setPrefHeight(25);
+
+        /*
+        returnButton.setOnMouseClicked(event -> {
+
+        });
+
+         */
+
+
+        VBox vAlignment = new VBox();
+        vAlignment.setLayoutY(100);
+        vAlignment.setLayoutX(100);
+
+        vAlignment.getChildren().addAll(textBox, baseTextBox, returnButton);
+
+        rootSpeedTestRandom.getChildren().add(vAlignment);
+
         AtomicLong startTime = new AtomicLong();
+
+
         textBox.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.BACK_SPACE) {
                 textBox.setEditable(false);
@@ -177,7 +211,9 @@ public class main extends Application {
                     }
                 }
         );
+        primaryStage.setScene(testScene);
     }
+
     /*
     public static String getRandomText() throws IOException {
         int nrOfTexts = Objects.requireNonNull(new File("texts_english").list()).length;
