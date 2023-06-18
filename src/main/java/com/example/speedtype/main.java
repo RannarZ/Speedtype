@@ -1,6 +1,7 @@
 package com.example.speedtype;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -16,6 +18,10 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class main extends Application {
@@ -53,7 +59,19 @@ public class main extends Application {
         rootMainMenu.getChildren().add(alignment);
 
         speedType.setOnMouseClicked(event -> {
-            mainTest(primaryStage);
+            try {
+                mainTest(primaryStage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        addText.setOnMouseClicked(event -> {
+            try {
+                addTextWindow(primaryStage);
+            } finally {
+                System.out.println("okay");
+            }
         });
 
 
@@ -62,29 +80,17 @@ public class main extends Application {
         primaryStage.show();
     }
 
-    /**
-     * Checks whether an array contains given number
-     * @param array given array
-     * @param nr given number
-     * @return index of given number if exists and -1 if not
-     */
-    public static int containsNr(int[] array, int nr){
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == nr)
-                return i;
-        }
-        return -1;
-    }
+
 
 
     /**
-     * Main test algorithm. Method implements an lambda function
+     * Main test window
      */
-    public static void mainTest(Stage primaryStage) {
+    public static void mainTest(Stage primaryStage) throws IOException {
         //Ei tuvasta caps locki iga kord.
         Group rootSpeedTestRandom = new Group();
-        Scene testScene = new Scene(rootSpeedTestRandom,700, 700);
-        TextComparison writing = new TextComparison("Following after the old man, Frink pushed open the big metal door to the main work area. The rumble of machinery, which he had heard around him every day for so long - sight of men at the machines, air filled with flash of light, waste dust, movement. There went the old man. Frink increased his pace.");
+        Scene testScene = new Scene(rootSpeedTestRandom, 700, 700);
+        TextComparison writing = new TextComparison(getRandomText());
 
         TextField textBox = new TextField();
         textBox.setPrefWidth(500);
@@ -107,7 +113,6 @@ public class main extends Application {
         returnButton.setOnMouseClicked(event -> {
 
         });
-
          */
 
 
@@ -128,109 +133,146 @@ public class main extends Application {
             }
         });
 
+        //Main speed typing algorithm
         textBox.setOnKeyReleased(event -> {
+            if (writing.getIndex() == 0) {
+                startTime.set(System.currentTimeMillis());
+            }
+            if (!event.getText().isBlank() || event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.SPACE) {
+                int index = writing.getIndex();
+                int mistakes = writing.getNrOfMistakes();
 
-                    if (writing.getIndex() == 0) {
-                        startTime.set(System.currentTimeMillis());
-                    }
-                    if (!event.getText().isBlank() || event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.SPACE) {
-                        int index = writing.getIndex();
-                        int mistakes = writing.getNrOfMistakes();
+                //SPACE BAR PRESS
+                if (event.getCode().equals(KeyCode.SPACE) && writing.getMatch() && writing.getBaseText().charAt(index) == ' ' && textBox.isEditable()) { //Deleting last writing from textField
+                    textBox.clear();
 
-                        //SPACE BAR PRESS
-                        if (event.getCode().equals(KeyCode.SPACE) && writing.getMatch() && writing.getBaseText().charAt(index) == ' ' && textBox.isEditable()) { //Deleting last writing from textField
-                            textBox.clear();
-
-                            if (!(mistakes >= 7)) {//Checks whether mistake Array is full or not
-                                if (index != 0 && !(writing.getWrittenText().charAt(index - 1) == ' ')) { // Check whether last symbol in users writing is empty space
-                                    writing.addToWritten(event.getText());
-                                    writing.addToIndex();
-                                    writing.setLastCorrect(index + 1); //Changes last deletable index to last correct spacebar press
-                                }
-                                if (writing.sameSymbolCheck() != -1) {
-                                    writing.addToMistakeArray(writing.sameSymbolCheck());
-                                    writing.setMatchFalse();
-                                }
-                            }
+                    if (!(mistakes >= 7)) {//Checks whether mistake Array is full or not
+                        if (index != 0 && !(writing.getWrittenText().charAt(index - 1) == ' ')) { // Check whether last symbol in users writing is empty space
+                            writing.addToWritten(event.getText());
+                            writing.addToIndex();
+                            writing.setLastCorrect(index + 1); //Changes last deletable index to last correct spacebar press
                         }
-
-                        //BACKSPACE PRESS
-                        else if (event.getCode() == KeyCode.BACK_SPACE) { //Deleting symbols
-                            textBox.setEditable(true);
-                            if (index > 0 && index != writing.getLastCorrect()) {
-                                writing.removeFromIndex();
-                                writing.removeFromWritten();
-                                index = writing.getIndex();
-                                int indexInArray = containsNr(writing.getMistakeIndex(), index);
-                                if (indexInArray != -1) {
-                                    if (writing.getMistakeIndex()[0] == index) {
-                                        writing.removeFromMistakeArray();
-                                        writing.setMatchTrue();
-                                    } else {
-                                        writing.removeFromMistakeArray();
-                                    }
-                                }
-                            }
-
+                        if (writing.sameSymbolCheck() != -1) {
+                            writing.addToMistakeArray(writing.sameSymbolCheck());
+                            writing.setMatchFalse();
                         }
-
-                        //ANY OTHER KEY PRESS
-                        else {
-                            if (!(mistakes >= 7) && textBox.isEditable()) {
-                                if ((event.isShiftDown() || event.isShortcutDown())) { //Checks whether shift key or AltGR key is pressed down
-                                    //Then takse symbol from textBox
-                                    writing.addToWritten(Character.toString(textBox.getCharacters().charAt(textBox.getCharacters().length() - 1)));
-                                } else {
-                                    writing.addToWritten(event.getText());
-                                }
-                                if (writing.getBaseText().length() > index) {
-                                    if (writing.sameSymbolCheck() != -1) {
-                                        writing.addToMistakeArray(writing.sameSymbolCheck());
-                                        writing.setMatchFalse();
-                                    }
-                                }
-                                writing.addToIndex();
-                            }
-                        }
-
-                        if (!writing.getMatch()) { //Checks whether last symbol entered is the same as the corresponding symbol in given text
-                            testScene.setFill(Color.RED);
-                        } else {
-                            testScene.setFill(Color.WHITE);
-                        }
-                    }
-                    if (writing.getNrOfMistakes() == -1 && writing.getWrittenText().length() == writing.getBaseText().length()){ //Checks whether full text is written
-                        textBox.setText(null);
-                        textBox.setDisable(true);
-
-                        double words = writing.getBaseText().split(" ").length;
-                        long endTime = System.currentTimeMillis();
-                        double finalWPM = words / ((double) (endTime - startTime.get()) / (1000.0 * 60.0)); //Calculates words per minute
-
-                        System.out.println("Final WPM is " + Math.round(finalWPM));
                     }
                 }
-        );
+
+                //BACKSPACE PRESS
+                else if (event.getCode() == KeyCode.BACK_SPACE) { //Deleting symbols
+                    textBox.setEditable(true);
+                    if (index > 0 && index != writing.getLastCorrect()) {
+                        writing.removeFromIndex();
+                        writing.removeFromWritten();
+                        index = writing.getIndex();
+                        int indexInArray = containsNr(writing.getMistakeIndex(), index);
+                        if (indexInArray != -1) {
+                            if (writing.getMistakeIndex()[0] == index) {
+                                writing.removeFromMistakeArray();
+                                writing.setMatchTrue();
+                            } else {
+                                writing.removeFromMistakeArray();
+                            }
+                        }
+                    }
+
+                }
+
+                //ANY OTHER KEY PRESS
+                else {
+                    if (!(mistakes >= 7) && textBox.isEditable()) {
+                        if ((event.isShiftDown() || event.isShortcutDown())) { //Checks whether shift key or AltGR key is pressed down
+                            //Then takse symbol from textBox
+                            writing.addToWritten(Character.toString(textBox.getCharacters().charAt(textBox.getCharacters().length() - 1)));
+                        } else {
+                            writing.addToWritten(event.getText());
+                        }
+                        if (writing.getBaseText().length() > index) {
+                            if (writing.sameSymbolCheck() != -1) {
+                                writing.addToMistakeArray(writing.sameSymbolCheck());
+                                writing.setMatchFalse();
+                            }
+                        }
+                        writing.addToIndex();
+                    }
+                }
+
+                if (!writing.getMatch()) { //Checks whether last symbol entered is the same as the corresponding symbol in given text
+                    testScene.setFill(Color.RED);
+                } else {
+                    testScene.setFill(Color.WHITE);
+                }
+            }
+            if (writing.getNrOfMistakes() == -1 && writing.getWrittenText().length() == writing.getBaseText().length()) { //Checks whether full text is written
+                textBox.setText(null);
+                textBox.setDisable(true);
+
+                double words = writing.getBaseText().split(" ").length;
+                long endTime = System.currentTimeMillis();
+                double finalWPM = words / ((double) (endTime - startTime.get()) / (1000.0 * 60.0)); //Calculates words per minute
+
+                System.out.println("Final WPM is " + Math.round(finalWPM));
+            }
+        });
         primaryStage.setScene(testScene);
     }
 
-    /*
+    /**
+     * Method addTextWindow creates the window where user can insert text into database
+     * @param primaryStage main stage
+     */
+    public static void addTextWindow(Stage primaryStage) {
+        Group addTextRoot = new Group();
+        Scene addTextScene = new Scene(addTextRoot, 700, 700);
+
+        TextField writingBox = new TextField();
+
+        addTextRoot.getChildren().add(writingBox);
+
+        primaryStage.setScene(addTextScene);
+    }
+
+    /**
+     * Method getRandomText finds a random text file from the directory where the texts are located
+     * @return the final text
+     */
     public static String getRandomText() throws IOException {
-        int nrOfTexts = Objects.requireNonNull(new File("texts_english").list()).length;
-        System.out.println(nrOfTexts);
+        String[] listOfFiles = new File("./src/main/resources/texts_english").list();
+
+        int nrOfTexts = Objects.requireNonNull(listOfFiles).length;
         double randomNr = Math.random();
         int whatNrText = (int) (randomNr * nrOfTexts + 1);
-        String finalText = "";
+
+        StringBuilder finalText;
         try (BufferedReader bf = new BufferedReader(
                 new InputStreamReader(
-                        new FileInputStream("NR" + whatNrText + ".txt"), StandardCharsets.UTF_8))) {
-            finalText = bf.readLine();
+                        new FileInputStream("./src/main/resources/texts_english/" + listOfFiles[whatNrText - 1]), StandardCharsets.UTF_8))) {
+            String row = bf.readLine();
+            finalText = new StringBuilder();
+            while (row != null) {
+                finalText.append(row);
+                row = bf.readLine();
+            }
         }
-        return finalText;
+        return finalText.toString();
     }
-     */
 
-    public static void main(String[] args) {
+    /**
+     * Checks whether an array contains given number
+     * @param array given array
+     * @param nr given number
+     * @return index of given number if exists and -1 if not
+     */
+    public static int containsNr(int[] array, int nr){
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == nr)
+                return i;
+        }
+        return -1;
+    }
+
+    public static void main(String[] args){
         launch();
     }
 }
