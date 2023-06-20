@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Border;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -28,9 +29,17 @@ public class main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
+        mainMenu(primaryStage);
+        primaryStage.setTitle("SpeedType");
+        primaryStage.show();
+    }
 
-
+    /**
+     * Method main menu executes the main menu scene.
+     * @param primaryStage
+     */
+    public static void mainMenu(Stage primaryStage) {
         Group rootMainMenu = new Group();
         Scene mainMenu = new Scene(rootMainMenu, 700, 700);
 
@@ -75,11 +84,9 @@ public class main extends Application {
         });
 
 
-        primaryStage.setTitle("SpeedType");
-        primaryStage.setScene(mainMenu);
-        primaryStage.show();
-    }
 
+        primaryStage.setScene(mainMenu);
+    }
 
 
 
@@ -109,11 +116,11 @@ public class main extends Application {
         returnButton.setPrefWidth(75);
         returnButton.setPrefHeight(25);
 
-        /*
-        returnButton.setOnMouseClicked(event -> {
 
+        returnButton.setOnMouseClicked(event -> {
+            mainMenu(primaryStage);
         });
-         */
+
 
 
         VBox vAlignment = new VBox();
@@ -226,8 +233,9 @@ public class main extends Application {
         Group addTextRoot = new Group();
         Scene addTextScene = new Scene(addTextRoot, 700, 700);
 
-        TextField writingBox = new TextField();
+        VBox vertAlignment = new VBox();
 
+        TextField writingBox = new TextField();
         addTextRoot.getChildren().add(writingBox);
 
         primaryStage.setScene(addTextScene);
