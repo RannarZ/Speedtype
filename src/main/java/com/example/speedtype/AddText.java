@@ -14,8 +14,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
+import java.nio.charset.StandardCharsets;
 
 public class AddText {
 
@@ -28,9 +27,11 @@ public class AddText {
         this.addTextScene = addTextScene;
         this.rootaddText = rootaddText;
     }
+
     /**
      * Method addTextWindow creates the window where user can insert text into database
      */
+
     public void addTextWindow(Scene mainMenuScene) {
 
         VBox vertAlignment = new VBox();
@@ -55,6 +56,7 @@ public class AddText {
         saveButton.setPrefWidth(100);
         saveButton.setPrefHeight(25);
 
+        //Save button clicked on main window
         saveButton.setOnMouseClicked(event -> {
 
             Stage nameStage = new Stage();
@@ -68,19 +70,30 @@ public class AddText {
 
             Button saveFileNameButton = new Button("Save");
 
-            saveFileNameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        saveTextToFile(name.getText(), writingBox.getText());
+            //Save button clicked on name window
+            saveFileNameButton.setOnMouseClicked(event1 -> {
+
+                try {
+                    String filePath = "./src/main/resources/texts_english/" + name.getText() + ".txt";
+                    File file = new File(filePath);
+                    if (file.exists()) {
+                        Text repeat = new Text("File already exists!");
+                        givenText.getChildren().remove(command);
+                        givenText.getChildren().add(repeat);
+                    } else {
+                        saveTextToFile(filePath, writingBox.getText());
+                        nameStage.close();
                     }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
 
             VBox vAlignment = new VBox();
             vAlignment.setLayoutX(75);
 
-            vAlignment.getChildren().addAll(command, name, saveFileNameButton);
+            vAlignment.getChildren().addAll(givenText, name, saveFileNameButton);
             fileNameRoot.getChildren().add(vAlignment);
             nameStage.setScene(nameScene);
             nameStage.show();
@@ -98,14 +111,16 @@ public class AddText {
         primaryStage.setScene(addTextScene);
     }
 
-    public static void saveTextToFile(String fileName, String text) {
-        //TODO: lepta
+    /**
+     * Method saveTextToFile saves given text to a new .txt file
+     * @param filePath To where and which file text will be saved
+     * @param text The text that will be saved
+     */
+    public static void saveTextToFile(String filePath, String text) {
         try (BufferedWriter bf = new BufferedWriter(
                 new OutputStreamWriter(
-                        new FileOutputStream(fileName + ".txt")))) {
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+                        new FileOutputStream(filePath), StandardCharsets.UTF_8))) {
+            bf.write(text);
         } catch (IOException e) {
             e.printStackTrace();
         }
