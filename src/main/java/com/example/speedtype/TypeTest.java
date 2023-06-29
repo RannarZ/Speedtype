@@ -13,7 +13,9 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class TypeTest {
@@ -69,15 +71,8 @@ public class TypeTest {
 
         AtomicLong startTime = new AtomicLong();
 
-
+        AtomicBoolean keyDown = new AtomicBoolean(false);
         textBox.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.BACK_SPACE) {
-                textBox.setEditable(false);
-            }
-        });
-
-        //Main speed typing algorithm
-        textBox.setOnKeyReleased(event -> {
             if (writing.getIndex() == 0) {
                 startTime.set(System.currentTimeMillis());
             }
@@ -86,12 +81,11 @@ public class TypeTest {
                 int mistakes = writing.getNrOfMistakes();
 
                 //SPACE BAR PRESS
-                if (event.getCode().equals(KeyCode.SPACE) && writing.getMatch() && writing.getBaseText().charAt(index) == ' ' && textBox.isEditable()) { //Deleting last writing from textField
+                if (event.getCode().equals(KeyCode.SPACE) && writing.getMatch() && writing.getBaseText().charAt(index) == ' ') { //Deleting last writing from textField
                     textBox.clear();
-
                     if (!(mistakes >= 7)) {//Checks whether mistake Array is full or not
                         if (index != 0 && !(writing.getWrittenText().charAt(index - 1) == ' ')) { // Check whether last symbol in users writing is empty space
-                            writing.addToWritten(event.getText());
+                            writing.addToWritten(' ');
                             writing.addToIndex();
                             writing.setLastCorrect(index + 1); //Changes last deletable index to last correct spacebar press
                         }
@@ -104,7 +98,6 @@ public class TypeTest {
 
                 //BACKSPACE PRESS
                 else if (event.getCode() == KeyCode.BACK_SPACE) { //Deleting symbols
-                    textBox.setEditable(true);
                     if (index > 0 && index != writing.getLastCorrect()) {
                         writing.removeFromIndex();
                         writing.removeFromWritten();
@@ -125,19 +118,16 @@ public class TypeTest {
                 //ANY OTHER KEY PRESS
                 else {
                     if (!(mistakes >= 7) && textBox.isEditable()) {
-                        if ((event.isShiftDown() || event.isShortcutDown())) { //Checks whether shift key or AltGR key is pressed down
-                            //Then takse symbol from textBox
-                            writing.addToWritten(Character.toString(textBox.getCharacters().charAt(textBox.getCharacters().length() - 1)));
-                        } else {
-                            writing.addToWritten(event.getText());
-                        }
-                        if (writing.getBaseText().length() > index) {
-                            if (writing.sameSymbolCheck() != -1) {
-                                writing.addToMistakeArray(writing.sameSymbolCheck());
-                                writing.setMatchFalse();
+                        if (!event.isShiftDown() && !event.isShortcutDown()) {
+                            writing.addToWritten(event.getText().charAt(0));
+                            if (writing.getBaseText().length() > index) {
+                                if (writing.sameSymbolCheck() != -1) {
+                                    writing.addToMistakeArray(writing.sameSymbolCheck());
+                                    writing.setMatchFalse();
+                                }
                             }
+                            writing.addToIndex();
                         }
-                        writing.addToIndex();
                     }
                 }
 
@@ -156,6 +146,28 @@ public class TypeTest {
                 double finalWPM = words / ((double) (endTime - startTime.get()) / (1000.0 * 60.0)); //Calculates words per minute
 
                 System.out.println("Final WPM is " + Math.round(finalWPM));
+            }
+        });
+
+        //Main speed typing algorithm
+        textBox.setOnKeyReleased(event -> {
+            if (event.getCode().equals(KeyCode.SPACE) && writing.getMatch()) {
+                textBox.setText(null);
+            }
+            else if ((event.isShiftDown() || event.isShortcutDown()) && event.getCode() != KeyCode.BACK_SPACE) {
+                writing.addToWritten(textBox.getText().charAt(textBox.getText().length() - 1));
+                if (writing.getBaseText().length() > writing.getIndex()) {
+                    if (writing.sameSymbolCheck() != -1) {
+                        writing.addToMistakeArray(writing.sameSymbolCheck());
+                        writing.setMatchFalse();
+                    }
+                }
+                writing.addToIndex();
+            }
+            if (!writing.getMatch()) { //Checks whether last symbol entered is the same as the corresponding symbol in given text
+                typeTestSceneRandom.setFill(Color.RED);
+            } else {
+                typeTestSceneRandom.setFill(Color.WHITE);
             }
         });
         primaryStage.setScene(typeTestSceneRandom);

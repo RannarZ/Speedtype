@@ -18,7 +18,7 @@ public class TextComparison {
         return baseText;
     }
 
-    public void addToWritten(String c) {
+    public void addToWritten(char c) {
         writtenText.append(c);
     }
 

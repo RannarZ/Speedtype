@@ -10,7 +10,7 @@ Programmi osad:
 
 Tööetapid:
 
-1.Luua aken peamenüüga (Valikud kas tekstiga või suvaliselt, edetabeli vaatamise võimalus, oma teksti lisamine)
++1.Luua aken peamenüüga (Valikud kas tekstiga või suvaliselt, edetabeli vaatamise võimalus, oma teksti lisamine)
 
 2.Testi aken (Kirjutamise lahter, teksti lahter, nupud erinevate valikutega, alguse aja loendur)
 
@@ -24,7 +24,7 @@ Tööetapid:
 
 7.Edetabeli loomine (suudaks salvestada millise tekstiga tuli rekord ning kui palju on ja kes tegi, suvaliste sõnadega eraldi edetabel)
 
-8.Kasutaja oma tekstide lisamine (funktsioon, mis salvestab tekstid kuskile, et ka peale kinni panemist ja avamist saaks neid samu tekste kätte. Sammuti ka tekstide kustutamise funktsioon)
++8.Kasutaja oma tekstide lisamine (funktsioon, mis salvestab tekstid kuskile, et ka peale kinni panemist ja avamist saaks neid samu tekste kätte. Sammuti ka tekstide kustutamise funktsioon)
 
 9.Kasutajal võimalus valida ise tekst, millega soovib testi teha.
 
