@@ -14,13 +14,13 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class AddText {
+public class AddTextWindow {
 
     private final Stage primaryStage;
     private final Scene addTextScene;
     private final Group rootaddText;
 
-    AddText(Stage primaryStage, Scene addTextScene, Group rootaddText) {
+    AddTextWindow(Stage primaryStage, Scene addTextScene, Group rootaddText) {
         this.primaryStage = primaryStage;
         this.addTextScene = addTextScene;
         this.rootaddText = rootaddText;

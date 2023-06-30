@@ -8,12 +8,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainMenu {
+public class MainMenuWindow {
     private final Stage primaryStage;
     private final Scene mainMenuScene;
     private final Group rootMainMenu;
 
-    MainMenu(Stage primaryStage, Scene mainMenuScene, Group rootMainMenu) {
+    MainMenuWindow(Stage primaryStage, Scene mainMenuScene, Group rootMainMenu) {
         this.primaryStage = primaryStage;
         this.mainMenuScene = mainMenuScene;
         this.rootMainMenu = rootMainMenu;
@@ -51,7 +51,7 @@ public class MainMenu {
         speedType.setOnMouseClicked(event -> {
             Group rootTypeTest = new Group();
             Scene typeTestRanScene = new Scene(rootTypeTest, 700, 700);
-            TypeTest typeTest = new TypeTest(primaryStage, typeTestRanScene, rootTypeTest);
+            TypeTestWindow typeTest = new TypeTestWindow(primaryStage, typeTestRanScene, rootTypeTest);
             try {
                 typeTest.typeTest(mainMenuScene);
             } catch (IOException e) {
@@ -65,7 +65,7 @@ public class MainMenu {
         addText.setOnMouseClicked(event -> {
             Group rootAddText = new Group();
             Scene addTextScene = new Scene(rootAddText, 700, 700);
-            AddText addTextW = new AddText(primaryStage, addTextScene, rootAddText);
+            AddTextWindow addTextW = new AddTextWindow(primaryStage, addTextScene, rootAddText);
             try {
                 addTextW.addTextWindow(mainMenuScene);
             } finally {
