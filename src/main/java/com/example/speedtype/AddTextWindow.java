@@ -14,17 +14,8 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class AddTextWindow {
-
-    private final Stage primaryStage;
-    private final Scene addTextScene;
-    private final Group rootaddText;
-
-    AddTextWindow(Stage primaryStage, Scene addTextScene, Group rootaddText) {
-        this.primaryStage = primaryStage;
-        this.addTextScene = addTextScene;
-        this.rootaddText = rootaddText;
-    }
+public record AddTextWindow(Stage primaryStage, Scene addTextScene,
+                            Group rootaddText) {
 
     /**
      * Method addTextWindow creates the window where user can insert text into database
@@ -103,7 +94,7 @@ public class AddTextWindow {
 
 
         hAlignment.getChildren().addAll(returnButton, saveButton);
-        vertAlignment.getChildren().addAll(writingBox,hAlignment);
+        vertAlignment.getChildren().addAll(writingBox, hAlignment);
         rootaddText.getChildren().add(vertAlignment);
 
         primaryStage.setScene(addTextScene);
@@ -111,8 +102,9 @@ public class AddTextWindow {
 
     /**
      * Method saveTextToFile saves given text to a new .txt file
+     *
      * @param filePath To where and which file text will be saved
-     * @param text The text that will be saved
+     * @param text     The text that will be saved
      */
     public static void saveTextToFile(String filePath, String text) {
         try (BufferedWriter bf = new BufferedWriter(

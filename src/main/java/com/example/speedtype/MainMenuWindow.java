@@ -8,16 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainMenuWindow {
-    private final Stage primaryStage;
-    private final Scene mainMenuScene;
-    private final Group rootMainMenu;
-
-    MainMenuWindow(Stage primaryStage, Scene mainMenuScene, Group rootMainMenu) {
-        this.primaryStage = primaryStage;
-        this.mainMenuScene = mainMenuScene;
-        this.rootMainMenu = rootMainMenu;
-    }
+public record MainMenuWindow(Stage primaryStage, Scene mainMenuScene,
+                             Group rootMainMenu) {
 
 
     /**
@@ -26,7 +18,7 @@ public class MainMenuWindow {
     public void mainMenuOnScreen() {
         VBox alignment = new VBox();
         alignment.setSpacing(100);
-        alignment.setLayoutX((mainMenuScene.getWidth() - 200 )/ 2);
+        alignment.setLayoutX((mainMenuScene.getWidth() - 200) / 2);
 
         Button speedType = new Button("Speedtype");
         speedType.setPrefWidth(200);
@@ -41,9 +33,6 @@ public class MainMenuWindow {
         addText.setPrefHeight(50);
 
         alignment.getChildren().addAll(speedType, leaderboard, addText);
-
-
-
 
 
         rootMainMenu.getChildren().add(alignment);
@@ -62,6 +51,21 @@ public class MainMenuWindow {
 
         });
 
+        leaderboard.setOnMouseClicked(event -> {
+            Group rootLB = new Group();
+            Scene LBScene = new Scene(rootLB, 700, 700);
+            LeaderboardsWindow LB = new LeaderboardsWindow(primaryStage, LBScene, rootLB);
+            try {
+                LB.windowLB(mainMenuScene);
+            } /*catch (IOException e) {
+                e.printStackTrace();
+            }
+             */ finally {
+                System.out.println("To leaderboards window");
+            }
+
+        });
+
         addText.setOnMouseClicked(event -> {
             Group rootAddText = new Group();
             Scene addTextScene = new Scene(rootAddText, 700, 700);
@@ -72,7 +76,6 @@ public class MainMenuWindow {
                 System.out.println("To text adding window");
             }
         });
-
 
 
         primaryStage.setScene(mainMenuScene);

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.speedtype.MainMenuWindow">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="120.0" prefHeight="400.0" prefWidth="415.0" spacing="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextFlow prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="SpeedType">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+               </padding></Button>
+            <Button layoutX="100.0" layoutY="100.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Leaderboards">
+               <padding>
+                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+               </padding>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Add/remove text">
+               <padding>
+                  <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
+               </padding>
+            </Button>
+         </children></VBox>
+   </children>
+</AnchorPane>
