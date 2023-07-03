@@ -3,6 +3,7 @@ package com.example.speedtype;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,10 +12,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -77,7 +74,7 @@ public class SpeedtypeController implements Initializable {
     }
 
     @FXML
-    public void keyPressed(KeyEvent event) {
+    public void keyPressed(KeyEvent event) throws IOException {
 
             if (comparison.getIndex() == 0)
                 comparison.setStartTime(System.currentTimeMillis());
@@ -139,30 +136,30 @@ public class SpeedtypeController implements Initializable {
                     }
                 }
 
-                if (!comparison.getMatch())  //Checks whether last symbol entered is the same as the corresponding symbol in given text
-                    anchor.setStyle("-fx-background-color: #ff0000");
-                else
-                    anchor.setStyle("-fx-background-color: #ffffff");
-
             }
             //When text is finished
             if (comparison.getNrOfMistakes() == -1 && comparison.getWrittenText().length() == comparison.getBaseText().length()) { //Checks whether full text is written
                 textBox.setText(null);
                 textBox.setDisable(true);
                 double words = comparison.getBaseText().split(" ").length;
-                int wpm = getWPM(comparison.getStartTime(), words);
-                System.out.println("Your WPM is " + wpm);
+                long endTime = System.currentTimeMillis();
+                int finalWPM = (int) Math.round(words / ((double) (endTime - comparison.getStartTime()) / (1000.0 * 60.0))); //Calculates words per minute
+                System.out.println("Your WPM is " + finalWPM);
+                saveResultWindow();
 
             }
     }
 
-    public int getWPM(long startTime, double words) {
-        words = comparison.getBaseText().split(" ").length;
-        long endTime = System.currentTimeMillis();
-        int finalWPM = (int) Math.round(words / ((double) (endTime - comparison.getStartTime()) / (1000.0 * 60.0))); //Calculates words per minute
-        return finalWPM;
-    }
+    public static void saveResultWindow() throws IOException {
+        Stage resultStage = new Stage();
+        //Something wrong
+        Group resultRoot = FXMLLoader.load(Objects.requireNonNull(SaveResultController.class.getResource("SaveResult.fxml")));
+        Scene resultScene = new Scene(resultRoot);
 
+        resultStage.setScene(resultScene);
+        resultStage.show();
+
+    }
 
     /**
      * Method getRandomText finds a random text file from the directory where the texts are located

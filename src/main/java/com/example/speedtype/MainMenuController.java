@@ -6,8 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class MainMenuController {
 
 
     @FXML
-    void speedTypeClicked(ActionEvent event) throws IOException {
+    void speedTypeClicked(MouseEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Speedtype.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -30,7 +29,22 @@ public class MainMenuController {
 
     }
 
-    public Stage getStage() {
-        return stage;
+    @FXML
+    void leaderboardsClicked(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Leaderboards.fxml")));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    @FXML
+    void addRemoveClicked(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AddRemove.fxml")));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
