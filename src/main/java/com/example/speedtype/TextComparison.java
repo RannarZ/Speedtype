@@ -9,6 +9,8 @@ public class TextComparison {
     private int[] mistakeIndex = {-1, -1, -1, -1, -1, -1, -1, -1};
     private int nrOfMistakes = -1;
     private int lastCorrect = -1;
+    private long startTime;
+    private boolean shiftDown = false;
 
     TextComparison(String baseText) {
         this.baseText = baseText;
@@ -82,7 +84,21 @@ public class TextComparison {
         nrOfMistakes--;
     }
 
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
 
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setShiftDown(boolean shiftDown) {
+        this.shiftDown = shiftDown;
+    }
+
+    public boolean isShiftDown() {
+        return shiftDown;
+    }
 
     /**
      * Function checks whether last symbol in users written text is equal to a symbol at the same index on given base text

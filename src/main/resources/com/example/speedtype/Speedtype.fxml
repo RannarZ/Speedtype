@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane fx:id="anchor" onKeyPressed="#keyPressed" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.speedtype.SpeedtypeController">
+   <children>
+      <VBox fx:id="back" layoutX="150.0" prefHeight="700.0" prefWidth="400.0" spacing="10.0">
+         <children>
+            <TextField fx:id="textBox" onKeyPressed="#keyPressed" prefWidth="400.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <TextFlow blendMode="SRC_ATOP" prefWidth="200.0">
+               <children>
+                  <Text fx:id="baseText" strokeType="OUTSIDE" strokeWidth="0.0" text="Example text" textAlignment="JUSTIFY" wrappingWidth="400.0" />
+               </children>
+            </TextFlow>
+            <Button mnemonicParsing="false" onMouseClicked="#returnToMain" text="Return" />
+         </children>
+         <padding>
+            <Insets top="50.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
