@@ -1,6 +1,7 @@
 package com.example.speedtype;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -24,8 +25,10 @@ public class AddRemoveController {
     private Scene scene;
     private Parent root;
 
+    @FXML
     public TextArea savedText;
 
+    @FXML
     public void returnToMain(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -34,7 +37,7 @@ public class AddRemoveController {
         stage.show();
     }
 
-
+    @FXML
     public void saveFile(){
         Stage nameStage = new Stage();
         Group fileNameRoot = new Group();

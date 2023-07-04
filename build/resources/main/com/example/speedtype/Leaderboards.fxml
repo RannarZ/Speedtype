@@ -24,13 +24,12 @@
                   <Button mnemonicParsing="false" text="Button" />
                </children>
             </HBox>
-            <TableView prefHeight="500.0" prefWidth="400.0">
+            <TableView fx:id="table" prefHeight="500.0" prefWidth="400.0">
               <columns>
-                <TableColumn minWidth="80.0" text="Nr" />
-                <TableColumn minWidth="80.0" text="Name" />
-                  <TableColumn minWidth="80.0" text="Text" />
-                  <TableColumn minWidth="80.0" text="WPM" />
-                  <TableColumn minWidth="80.0" text="Date" />
+                <TableColumn fx:id="number" minWidth="100.0" prefWidth="100.0" text="Nr" />
+                <TableColumn fx:id="name" minWidth="100.0" prefWidth="100.0" text="Name" />
+                  <TableColumn fx:id="wordsPerMinute" minWidth="100.0" prefWidth="100.0" text="WPM" />
+                  <TableColumn fx:id="date" minWidth="100.0" prefWidth="100.0" text="Date" />
               </columns>
             </TableView>
             <Button mnemonicParsing="false" onMouseClicked="#returnToMain" text="Return" />

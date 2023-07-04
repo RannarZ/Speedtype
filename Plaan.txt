@@ -12,13 +12,13 @@ Tööetapid:
 
 +1.Luua aken peamenüüga (Valikud kas tekstiga või suvaliselt, edetabeli vaatamise võimalus, oma teksti lisamine)
 
-2.Testi aken (Kirjutamise lahter, teksti lahter, nupud erinevate valikutega, alguse aja loendur)
++2.Testi aken (Kirjutamise lahter, teksti lahter, nupud erinevate valikutega, alguse aja loendur)
 
-3.Lisada mingid algsed tekstid 
++3.Lisada mingid algsed tekstid
 
 +4.Kirjutamise ajased funktsioonid ja sõnade lugemine (tuvastab millal valesti ja teatab kuidagi, piirab edasi kirjutust kui on vale umbes 10 tähte, aja pidamine)
 
-5.Tulemuse salvestamine
++5.Tulemuse salvestamine
 
 6.Suvalise teksti funktsioon ning suvaliste sõnade variant (Suvaliste sõnade jaoks peab ta ka lugema aega minutist alla)
 

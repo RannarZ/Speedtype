@@ -3,7 +3,6 @@ package com.example.speedtype;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -144,18 +143,21 @@ public class SpeedtypeController implements Initializable {
                 double words = comparison.getBaseText().split(" ").length;
                 long endTime = System.currentTimeMillis();
                 int finalWPM = (int) Math.round(words / ((double) (endTime - comparison.getStartTime()) / (1000.0 * 60.0))); //Calculates words per minute
-                System.out.println("Your WPM is " + finalWPM);
-                saveResultWindow();
+                saveResultWindow(finalWPM);
 
             }
     }
 
-    public static void saveResultWindow() throws IOException {
+    public void saveResultWindow(int wpm) throws IOException {
         Stage resultStage = new Stage();
-        //Something wrong
-        Group resultRoot = FXMLLoader.load(Objects.requireNonNull(SaveResultController.class.getResource("SaveResult.fxml")));
-        Scene resultScene = new Scene(resultRoot);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SaveResult.fxml"));
+        Parent root = loader.load();
 
+        SaveResultController saveResult = loader.getController();
+        saveResult.showScore(wpm);
+
+        Scene resultScene = new Scene(root);
+        resultStage.setTitle("Speedtype");
         resultStage.setScene(resultScene);
         resultStage.show();
 
