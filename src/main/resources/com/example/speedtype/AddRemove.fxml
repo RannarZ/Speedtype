@@ -13,16 +13,17 @@
    <children>
       <VBox layoutX="150.0" prefHeight="700.0" prefWidth="400.0" spacing="20.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Write the text you wish to save" textAlignment="CENTER" wrappingWidth="400.0">
+            <Text fx:id="saveText" strokeType="OUTSIDE" strokeWidth="0.0" text="Write the text you wish to save" textAlignment="CENTER" wrappingWidth="400.0">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
             <TextArea fx:id="savedText" prefHeight="100.0" prefWidth="500.0" wrapText="true" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#returnToMain" onMouseClicked="#returnToMain" text="Return" />
                   <Button mnemonicParsing="false" onMouseClicked="#saveFile" text="Save text" />
+                  <Button mnemonicParsing="false" onMouseClicked="#removeWindow" text="Remove Text" />
                </children>
             </HBox>
          </children>

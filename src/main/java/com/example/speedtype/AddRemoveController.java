@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -27,6 +28,8 @@ public class AddRemoveController {
 
     @FXML
     public TextArea savedText;
+    @FXML
+    Text saveText;
 
     @FXML
     public void returnToMain(ActionEvent event) throws IOException {
@@ -39,43 +42,58 @@ public class AddRemoveController {
 
     @FXML
     public void saveFile(){
-        Stage nameStage = new Stage();
-        Group fileNameRoot = new Group();
-        Scene nameScene = new Scene(fileNameRoot, 300, 100);
+        if(Objects.equals(savedText.getText(), "")) {
+            saveText.setText("Can't save an empty file!");
+        } else {
+            Stage nameStage = new Stage();
+            Group fileNameRoot = new Group();
+            Scene nameScene = new Scene(fileNameRoot, 300, 100);
 
-        TextField name = new TextField();
-        TextFlow givenText = new TextFlow();
-        Text command = new Text("Enter file name");
-        givenText.getChildren().add(command);
+            TextField name = new TextField();
+            TextFlow givenText = new TextFlow();
+            Text command = new Text("Enter file name");
+            givenText.getChildren().add(command);
 
-        Button saveFileNameButton = new Button("Save");
+            Button saveFileNameButton = new Button("Save");
 
-        //Save button clicked on name window
-        saveFileNameButton.setOnMouseClicked(event1 -> {
+            //Save button clicked on name window
+            saveFileNameButton.setOnMouseClicked(event1 -> {
+                System.out.println(savedText.getText() + ".");
 
-            try {
-                String filePath = "./src/main/resources/texts_english/" + name.getText() + ".txt";
-                File file = new File(filePath);
-                if (file.exists()) {
-                    Text repeat = new Text("File already exists!");
-                    givenText.getChildren().remove(command);
-                    givenText.getChildren().add(repeat);
-                } else {
-                    saveTextToFile(filePath, savedText.getText());
-                    nameStage.close();
+
+                try {
+                    String filePath = "./src/main/resources/texts_english/" + name.getText() + ".txt";
+                    File file = new File(filePath);
+                    if (file.exists()) {
+                        Text repeat = new Text("File already exists!");
+                        givenText.getChildren().remove(command);
+                        givenText.getChildren().add(repeat);
+                    } else {
+                        saveTextToFile(filePath, savedText.getText());
+                        nameStage.close();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+            });
+            VBox vAlignment = new VBox();
+            vAlignment.setLayoutX(75);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-    });
-        VBox vAlignment = new VBox();
-        vAlignment.setLayoutX(75);
+            vAlignment.getChildren().addAll(givenText, name, saveFileNameButton);
+            fileNameRoot.getChildren().add(vAlignment);
+            nameStage.setScene(nameScene);
+            nameStage.show();
+        }
+    }
 
-        vAlignment.getChildren().addAll(givenText, name, saveFileNameButton);
-        fileNameRoot.getChildren().add(vAlignment);
-        nameStage.setScene(nameScene);
-        nameStage.show();
+    @FXML
+    public void removeWindow(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("RemoveFile.fxml")));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
