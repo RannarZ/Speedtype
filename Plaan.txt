@@ -26,11 +26,11 @@ Tööetapid:
 
 +8.Kasutaja oma tekstide lisamine (funktsioon, mis salvestab tekstid kuskile, et ka peale kinni panemist ja avamist saaks neid samu tekste kätte. Sammuti ka tekstide kustutamise funktsioon)
 
-9.Kasutajal võimalus valida ise tekst, millega soovib testi teha.
++9.Kasutajal võimalus valida ise tekst, millega soovib testi teha.
 
-10.Vaheaken peamenüü ning testi vahele, mis laseb valida erinevate variantide vahel (kas suvaline tekst, suvalised sõnad või mõni kindel tekst.)
++10.Vaheaken peamenüü ning testi vahele, mis laseb valida erinevate variantide vahel (kas suvaline tekst, suvalised sõnad või mõni kindel tekst.)
 
-11.Kindla teksti korral võimalus otsida teksti
++11.Kindla teksti korral võimalus otsida teksti
 
 
 

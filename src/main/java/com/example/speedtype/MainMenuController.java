@@ -1,6 +1,5 @@
 package com.example.speedtype;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,7 +20,7 @@ public class MainMenuController {
 
     @FXML
     void speedTypeClicked(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Speedtype.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Modes.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

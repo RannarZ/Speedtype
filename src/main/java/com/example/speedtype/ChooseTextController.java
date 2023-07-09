@@ -8,25 +8,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class RemoveFileController implements Initializable {
+public class ChooseTextController implements Initializable {
 
     private String activeFileName;
 
     @FXML
-    public ListView<String> list;
-    @FXML
-    public VBox vertical;
-
+    ListView<String> list;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,8 +30,8 @@ public class RemoveFileController implements Initializable {
     }
 
     @FXML
-    public void returnToSaveFile(MouseEvent event)  throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AddRemove.fxml")));
+    public void returnToPrevious(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Modes.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -43,23 +39,25 @@ public class RemoveFileController implements Initializable {
     }
 
     @FXML
-    public void deleteFile(){
-        File deletable = new File("./src/main/resources/texts_english/" + activeFileName);
-        if (deletable.delete()) {
-            Text deleted = new Text(activeFileName + " is deleted!");
-            deleted.setFont(new Font(30));
-            createListViewContent();
-            vertical.getChildren().add(deleted);
-        } else {
-            Text notDeleted = new Text(activeFileName + " can not be deleted!");
-            notDeleted.setFont(new Font(30));
-            vertical.getChildren().add(notDeleted);
+    public void goToSpeedtype(MouseEvent event) throws IOException {
+        if (activeFileName != null) {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("ChosenSpeedtype.fxml")));
+            Parent root = loader.load();
+
+            ChosenSpeedtypeController chosenST = loader.getController();
+            chosenST.setBaseText(activeFileName);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         }
+
+
     }
 
     public void createListViewContent() {
         String[] listOfFiles = new File("./src/main/resources/texts_english").list();
-        list.getItems().removeAll(list.getItems());
         list.getItems().addAll(listOfFiles);
         list.getSelectionModel().selectedItemProperty().addListener(selection -> {
             activeFileName = list.getSelectionModel().getSelectedItem();
