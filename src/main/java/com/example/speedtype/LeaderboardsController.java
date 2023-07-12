@@ -19,9 +19,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class LeaderboardsController implements Initializable {
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     @FXML
     TableView<ResultStructure> table;
@@ -36,9 +33,9 @@ public class LeaderboardsController implements Initializable {
 
     @FXML
     public void returnToMain(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }

@@ -23,7 +23,7 @@
                <padding>
                   <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
                </padding></Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Random words">
+            <Button mnemonicParsing="false" onMouseClicked="#goToRandomWords" prefHeight="50.0" prefWidth="200.0" text="Random words">
                <padding>
                   <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
                </padding></Button>

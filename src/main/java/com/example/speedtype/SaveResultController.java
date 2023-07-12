@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 public class SaveResultController {
 
+    private static boolean text = true; //For detecting whether saving a full text score or random words score
+
     @FXML
     Button closeButton;
     @FXML
@@ -55,9 +57,14 @@ public class SaveResultController {
     }
 
     public static void saveScoreToFile(ArrayList<ResultStructure> scores) {
+        String filePath;
+        if (text)
+            filePath = "./src/main/resources/LeaderboardFiles/LeaderboardText.txt";
+        else
+            filePath = "./src/main/resources/LeaderboardFiles/LeaderboardWords.txt";
         try (BufferedWriter bf = new BufferedWriter(
                 new OutputStreamWriter(
-                new FileOutputStream("./src/main/resources/LeaderboardFiles/LeaderboardText.txt"), StandardCharsets.UTF_8))) {
+                new FileOutputStream(filePath), StandardCharsets.UTF_8))) {
 
             for (ResultStructure score : scores) {
                 bf.write(score.getIndex() + ";" + score.getName() + ";" + score.getWpm() + ";" + score.getDate() + "\n");
@@ -76,9 +83,15 @@ public class SaveResultController {
      */
     public static ArrayList<ResultStructure> readFromFile() {
         ArrayList<ResultStructure> scores = new ArrayList<>();
+        String filePath;
+        if (text)
+            filePath = "./src/main/resources/LeaderboardFiles/LeaderboardText.txt";
+        else
+            filePath = "./src/main/resources/LeaderboardFiles/LeaderboardWords.txt";
+
         try (BufferedReader bf = new BufferedReader(
                 new InputStreamReader(
-                new FileInputStream("./src/main/resources/LeaderboardFiles/LeaderboardText.txt"), StandardCharsets.UTF_8))) {
+                new FileInputStream(filePath), StandardCharsets.UTF_8))) {
             String row = bf.readLine();
             while (row != null) {
                 String[] rowList = row.split(";");
@@ -96,4 +109,7 @@ public class SaveResultController {
         return scores;
     }
 
+    public void setText(boolean text) {
+        this.text = text;
+    }
 }

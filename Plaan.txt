@@ -20,7 +20,7 @@ Tööetapid:
 
 +5.Tulemuse salvestamine
 
-6.Suvalise teksti funktsioon ning suvaliste sõnade variant (Suvaliste sõnade jaoks peab ta ka lugema aega minutist alla)
++6.Suvalise teksti funktsioon ning suvaliste sõnade variant (Suvaliste sõnade jaoks peab ta ka lugema aega minutist alla)
 
 7.Edetabeli loomine (suudaks salvestada millise tekstiga tuli rekord ning kui palju on ja kes tegi, suvaliste sõnadega eraldi edetabel)
 

@@ -40,4 +40,14 @@ public class ModesController {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    public void goToRandomWords(MouseEvent event) throws IOException{
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("RandomWordsTest.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }
