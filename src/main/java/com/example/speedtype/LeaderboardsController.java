@@ -10,6 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,6 +21,9 @@ import java.util.ResourceBundle;
 
 public class LeaderboardsController implements Initializable {
 
+
+    @FXML
+    Text header;
     @FXML
     TableView<ResultStructure> table;
     @FXML
@@ -40,16 +44,40 @@ public class LeaderboardsController implements Initializable {
         stage.show();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<ResultStructure> results = SaveResultController.readFromFile();
-        for (int i = 0; i < results.size(); i++) {
+    @FXML
+    public void getWordsLeader() {
+        table.getItems().removeAll(table.getItems());
+        header.setText("Random words");
+        ArrayList<ResultStructure> results = SaveResultController.readFromFile("./src/main/resources/LeaderboardFiles/LeaderboardWords.txt");
+        for (ResultStructure result : results) {
             //Each result will be added to TableView aka leaderboards
             number.setCellValueFactory(new PropertyValueFactory<>("index"));
             name.setCellValueFactory(new PropertyValueFactory<>("name"));
             wordsPerMinute.setCellValueFactory(new PropertyValueFactory<>("wpm"));
             date.setCellValueFactory(new PropertyValueFactory<>("date"));
-            table.getItems().add(results.get(i));
+            table.getItems().add(result);
         }
     }
+
+    @FXML
+    public void getTextLeader() {
+        table.getItems().removeAll(table.getItems());
+        header.setText("Full texts");
+        ArrayList<ResultStructure> results = SaveResultController.readFromFile("./src/main/resources/LeaderboardFiles/LeaderboardText.txt");
+        for (ResultStructure result : results) {
+            //Each result will be added to TableView aka leaderboards
+            number.setCellValueFactory(new PropertyValueFactory<>("index"));
+            name.setCellValueFactory(new PropertyValueFactory<>("name"));
+            wordsPerMinute.setCellValueFactory(new PropertyValueFactory<>("wpm"));
+            date.setCellValueFactory(new PropertyValueFactory<>("date"));
+            table.getItems().add(result);
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        getTextLeader();
+    }
+
+
 }

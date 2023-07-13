@@ -20594,11 +20594,6 @@ dextrose
 dextrous
 dextrously
 dextrousness
-d�class�
-d�colletage
-d�collet�
-d�tente
-d�tentes
 dfc
 dfm
 dhabi
@@ -44721,7 +44716,6 @@ manorbier
 manorial
 manors
 manpower
-manqu�
 mans
 mansard
 mansards
@@ -49449,12 +49443,6 @@ niger
 nigeria
 nigerian
 nigerians
-niggard
-niggardliness
-niggardly
-niggards
-nigger
-niggers
 niggle
 niggled
 niggles
@@ -69091,8 +69079,6 @@ soggiest
 sogginess
 soggy
 soho
-soign�
-soign�e
 soil
 soiled
 soiling
@@ -69434,8 +69420,7 @@ sot
 sots
 soubrette
 soubrettes
-souffl�
-souffl�s
+
 sough
 soughed
 soughing
@@ -83840,8 +83825,6 @@ yipping
 yips
 ymca
 yo
-yob
-yobs
 yodel
 yodeled
 yodeling
@@ -83922,14 +83905,7 @@ yummiest
 yummy
 yuppie
 yuppies
-yvette
-yvonne
-ywca
-z
-zabaglione
-zabagliones
 zachary
-zagreb
 zaire
 zairian
 zairians
@@ -84092,7 +84068,3 @@ zygotes
 zygotic
 zymology
 zymurgy
-�clat
-�lan
-�migr�s
-�poque

@@ -204,7 +204,7 @@ public class RandomWordsTestController {
     public static String getRandomWords() throws FileNotFoundException {
         String finalText = "";
         for (int i = 0; i < 120; i++) {
-            int randomNumber = (int) (Math.random() * 84099.0);
+            int randomNumber = (int) (Math.random() * 84071.0);
             try (Stream<String> lines = Files.lines(Paths.get("./src/main/resources/random_words.txt"))) {
                 finalText = finalText + lines.skip(randomNumber).findFirst().get() + " ";
                 System.out.println(finalText);

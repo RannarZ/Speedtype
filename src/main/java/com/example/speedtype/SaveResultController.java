@@ -37,10 +37,13 @@ public class SaveResultController {
         String[] arrayMessage = wpmMessage.getText().split(" ");
         int nr = Integer.parseInt(arrayMessage[arrayMessage.length - 1].strip());
         String name = nameField.getText();
+        ArrayList<ResultStructure> scores = new ArrayList<>();
+        if (text)
+        scores = readFromFile("./src/main/resources/LeaderboardFiles/LeaderboardText.txt");
+        else
+            scores = readFromFile("./src/main/resources/LeaderboardFiles/LeaderboardWords.txt");
 
-        ArrayList<ResultStructure> scores = readFromFile();
         ResultStructure currentScore = new ResultStructure(0, name, nr, LocalDate.now());
-
         for (int i = 0; i <= scores.size(); i++) {
             if(i == scores.size() || currentScore.getWpm() > scores.get(i).getWpm() ) {
                 currentScore.setIndex(i + 1);
@@ -81,13 +84,8 @@ public class SaveResultController {
      * Method readFromFile reads every result from leaderboards
      * @return ArrayList of every score in the leaderboards file
      */
-    public static ArrayList<ResultStructure> readFromFile() {
+    public static ArrayList<ResultStructure> readFromFile(String filePath) {
         ArrayList<ResultStructure> scores = new ArrayList<>();
-        String filePath;
-        if (text)
-            filePath = "./src/main/resources/LeaderboardFiles/LeaderboardText.txt";
-        else
-            filePath = "./src/main/resources/LeaderboardFiles/LeaderboardWords.txt";
 
         try (BufferedReader bf = new BufferedReader(
                 new InputStreamReader(
@@ -110,6 +108,6 @@ public class SaveResultController {
     }
 
     public void setText(boolean text) {
-        this.text = text;
+        SaveResultController.text = text;
     }
 }
