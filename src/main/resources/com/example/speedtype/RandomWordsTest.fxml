@@ -38,9 +38,10 @@
                         <Text fx:id="baseText" strokeType="OUTSIDE" strokeWidth="0.0" text="Example text" textAlignment="JUSTIFY" wrappingWidth="400.0" />
                     </children>
                 </TextFlow>
-                <HBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="400.0">
+                <HBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="400.0" spacing="200.0">
                <children>
                       <Button mnemonicParsing="false" onMouseClicked="#returnToPrevious" text="Return" />
+                  <Button mnemonicParsing="false" onMouseClicked="#getNewWords" text="Renew words" />
                </children>
                 </HBox>
             </children>

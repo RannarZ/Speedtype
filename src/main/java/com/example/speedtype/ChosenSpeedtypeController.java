@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -68,9 +69,11 @@ public class ChosenSpeedtypeController {
             comparison.addToIndex();
         }
         if (!comparison.getMatch()) { //Checks whether last symbol entered is the same as the corresponding symbol in given text
-            anchor.setStyle("-fx-background-color: #ff0000");
+            baseText.setSelectionStart(comparison.getMistakeIndex()[0]);
+            baseText.setSelectionEnd(comparison.getIndex());
+            baseText.setSelectionFill(Color.RED);
         } else {
-            anchor.setStyle("-fx-background-color: #ffffff");
+            baseText.setSelectionFill(Color.BLACK);
         }
     }
 

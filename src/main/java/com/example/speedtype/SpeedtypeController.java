@@ -11,6 +11,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.PathElement;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -22,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class SpeedtypeController implements Initializable {
 
-    private final TextComparison comparison = new TextComparison(getRandomText());
+    private TextComparison comparison = new TextComparison(getRandomText());
 
     @FXML
     public TextField textBox;
@@ -46,6 +49,14 @@ public class SpeedtypeController implements Initializable {
     }
 
     @FXML
+    public void getNewText() throws IOException {
+        textBox.setDisable(false);
+        textBox.setText(null);
+        comparison = new TextComparison(getRandomText());
+        baseText.setText(comparison.getBaseText());
+    }
+
+    @FXML
     public void keyReleased(KeyEvent event) {
         if (event.getCode().equals(KeyCode.SPACE) && comparison.getMatch()) {
             textBox.setText(null);
@@ -63,9 +74,11 @@ public class SpeedtypeController implements Initializable {
             comparison.addToIndex();
         }
         if (!comparison.getMatch()) { //Checks whether last symbol entered is the same as the corresponding symbol in given text
-            anchor.setStyle("-fx-background-color: #ff0000");
+            baseText.setSelectionStart(comparison.getMistakeIndex()[0]);
+            baseText.setSelectionEnd(comparison.getIndex());
+            baseText.setSelectionFill(Color.RED);
         } else {
-            anchor.setStyle("-fx-background-color: #ffffff");
+            baseText.setSelectionFill(Color.BLACK);
         }
     }
 

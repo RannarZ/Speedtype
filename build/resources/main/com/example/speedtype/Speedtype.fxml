@@ -33,7 +33,12 @@
                   <Text fx:id="baseText" strokeType="OUTSIDE" strokeWidth="0.0" text="Example text" textAlignment="JUSTIFY" wrappingWidth="400.0" />
                </children>
             </TextFlow>
-            <Button mnemonicParsing="false" onMouseClicked="#returnToMain" text="Return" />
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onMouseClicked="#returnToMain" text="Return" />
+                  <Button mnemonicParsing="false" onMouseClicked="#getNewText" text="Renew text" />
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets top="50.0" />

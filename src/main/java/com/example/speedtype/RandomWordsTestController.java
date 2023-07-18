@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -40,12 +41,17 @@ public class RandomWordsTestController {
     public RandomWordsTestController() throws FileNotFoundException {
     }
 
-
+    /**
+     * Method timerMethod creates a timer that counts down from 30 seconds
+     */
     public void timerMethod() {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                if (!started)
+                    timer.cancel();
+                else {
                 time -= 1;
                 timerText.setText("Time: " + time);
                 if (time == 0) {
@@ -67,6 +73,7 @@ public class RandomWordsTestController {
                         }
                     });
                 }
+                }
             }
         }, 0, 1000);
 
@@ -78,6 +85,16 @@ public class RandomWordsTestController {
         baseText.setText(comparison.getBaseText());
     }
 
+    @FXML
+    public void getNewWords() throws FileNotFoundException {
+        textBox.setDisable(false);
+        timerText.setText("Time: 30");
+        textBox.setText(null);
+        comparison = new TextComparison(getRandomWords());
+        baseText.setText(comparison.getBaseText());
+        time = 30;
+        started = false;
+    }
     @FXML
     public void keyReleased(KeyEvent event) {
         if (event.getCode().equals(KeyCode.SPACE) && comparison.getMatch()) {
@@ -96,18 +113,21 @@ public class RandomWordsTestController {
             comparison.addToIndex();
         }
         if (!comparison.getMatch()) { //Checks whether last symbol entered is the same as the corresponding symbol in given text
-            anchor.setStyle("-fx-background-color: #ff0000");
+            baseText.setSelectionStart(comparison.getMistakeIndex()[0]);
+            baseText.setSelectionEnd(comparison.getIndex());
+            baseText.setSelectionFill(Color.RED);
         } else {
-            anchor.setStyle("-fx-background-color: #ffffff");
+            baseText.setSelectionFill(Color.BLACK);
         }
     }
 
     @FXML
     public void keyPressed(KeyEvent event) throws IOException {
 
-        if (comparison.getIndex() == 0 && !started)
+        if (comparison.getIndex() == 0 && !started) {
             timerMethod();
-
+            started = true;
+        }
         if (!event.getText().isBlank() || event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.SPACE) {
             int index = comparison.getIndex();
             int mistakes = comparison.getNrOfMistakes();
@@ -202,17 +222,16 @@ public class RandomWordsTestController {
      * @return All 100 words in one String
      */
     public static String getRandomWords() throws FileNotFoundException {
-        String finalText = "";
+        StringBuilder finalText = new StringBuilder();
         for (int i = 0; i < 120; i++) {
             int randomNumber = (int) (Math.random() * 84071.0);
             try (Stream<String> lines = Files.lines(Paths.get("./src/main/resources/random_words.txt"))) {
-                finalText = finalText + lines.skip(randomNumber).findFirst().get() + " ";
-                System.out.println(finalText);
+                finalText.append(lines.skip(randomNumber).findFirst().get()).append(" ");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return finalText;
+        return finalText.toString();
     }
 
     /**
