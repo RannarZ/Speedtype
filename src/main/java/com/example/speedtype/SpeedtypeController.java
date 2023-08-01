@@ -168,6 +168,8 @@ public class SpeedtypeController implements Initializable {
         saveResult.showScore(wpm);
 
         Scene resultScene = new Scene(root);
+        resultScene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
+
         resultStage.setTitle("Speedtype");
         resultStage.setScene(resultScene);
         resultStage.show();
