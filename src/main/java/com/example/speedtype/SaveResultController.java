@@ -37,7 +37,7 @@ public class SaveResultController {
         String[] arrayMessage = wpmMessage.getText().split(" ");
         int nr = Integer.parseInt(arrayMessage[arrayMessage.length - 1].strip());
         String name = nameField.getText();
-        ArrayList<ResultStructure> scores = new ArrayList<>();
+        ArrayList<ResultStructure> scores;
         if (text)
         scores = readFromFile("./src/main/resources/LeaderboardFiles/LeaderboardText.txt");
         else

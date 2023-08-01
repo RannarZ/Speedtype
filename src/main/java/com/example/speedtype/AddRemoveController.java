@@ -36,6 +36,7 @@ public class AddRemoveController {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -48,6 +49,7 @@ public class AddRemoveController {
             Stage nameStage = new Stage();
             Group fileNameRoot = new Group();
             Scene nameScene = new Scene(fileNameRoot, 300, 100);
+            nameScene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
 
             TextField name = new TextField();
             TextFlow givenText = new TextFlow();
@@ -92,6 +94,7 @@ public class AddRemoveController {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("RemoveFile.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

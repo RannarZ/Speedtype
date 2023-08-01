@@ -14,6 +14,7 @@ public class main extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader load = new FXMLLoader(main.class.getResource("MainMenu.fxml"));
         Scene scene = new Scene(load.load(), 700, 700);
+        scene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
 
         primaryStage.setTitle("SpeedType");
         primaryStage.setScene(scene);

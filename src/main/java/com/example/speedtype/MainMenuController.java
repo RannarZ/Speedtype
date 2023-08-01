@@ -23,6 +23,7 @@ public class MainMenuController {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Modes.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
 
@@ -33,6 +34,7 @@ public class MainMenuController {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Leaderboards.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
 
@@ -43,6 +45,7 @@ public class MainMenuController {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AddRemove.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

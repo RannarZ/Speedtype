@@ -193,6 +193,7 @@ public class RandomWordsTestController {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Modes.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -211,6 +212,7 @@ public class RandomWordsTestController {
         saveResult.setText(false);
 
         Scene resultScene = new Scene(root);
+        resultScene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
         resultStage.setTitle("Speedtype");
         resultStage.setScene(resultScene);
         resultStage.show();

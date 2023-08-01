@@ -19,11 +19,11 @@
                </font>
             </Text>
             <TextArea fx:id="savedText" prefHeight="100.0" prefWidth="500.0" wrapText="true" />
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="25.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#returnToMain" onMouseClicked="#returnToMain" text="Return" />
-                  <Button mnemonicParsing="false" onMouseClicked="#saveFile" text="Save text" />
-                  <Button mnemonicParsing="false" onMouseClicked="#removeWindow" text="Remove Text" />
+                  <Button mnemonicParsing="false" onAction="#returnToMain" onMouseClicked="#returnToMain" prefWidth="150.0" text="Return" />
+                  <Button mnemonicParsing="false" onMouseClicked="#saveFile" prefWidth="150.0" text="Save text" />
+                  <Button mnemonicParsing="false" onMouseClicked="#removeWindow" prefWidth="150.0" text="Remove Text" />
                </children>
             </HBox>
          </children>
