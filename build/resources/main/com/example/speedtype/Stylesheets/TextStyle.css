@@ -2,3 +2,7 @@
     -fx-font-size: 10pt;
     -fx-font-family: "Courier New";
 }
+
+.text{
+    -fx-font-family: "Courier New";
+}
