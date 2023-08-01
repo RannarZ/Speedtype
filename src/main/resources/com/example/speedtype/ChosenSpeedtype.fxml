@@ -18,7 +18,7 @@
                     <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Speedtype chosen text" textAlignment="CENTER">
                             <font>
-                                <Font size="40.0" />
+                                <Font name="Courier New Bold" size="40.0" />
                             </font>
                         </Text>
                     </children>

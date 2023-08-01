@@ -49,7 +49,6 @@ public class LeaderboardsController implements Initializable {
     public void getWordsLeader() {
         table.getItems().removeAll(table.getItems());
         header.setText("Random words");
-        header.setWrappingWidth(200);
         ArrayList<ResultStructure> results = SaveResultController.readFromFile("./src/main/resources/LeaderboardFiles/LeaderboardWords.txt");
         for (ResultStructure result : results) {
             //Each result will be added to TableView aka leaderboards

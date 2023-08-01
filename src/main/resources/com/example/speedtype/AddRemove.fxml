@@ -15,7 +15,7 @@
          <children>
             <Text fx:id="saveText" strokeType="OUTSIDE" strokeWidth="0.0" text="Write the text you wish to save" textAlignment="CENTER" wrappingWidth="400.0">
                <font>
-                  <Font size="20.0" />
+                  <Font name="Courier New Bold" size="26.0" />
                </font>
             </Text>
             <TextArea fx:id="savedText" prefHeight="100.0" prefWidth="500.0" wrapText="true" />

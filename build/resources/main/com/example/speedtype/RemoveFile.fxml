@@ -15,7 +15,7 @@
          <children>
             <Text fx:id="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete text" textAlignment="CENTER">
                <font>
-                  <Font size="36.0" />
+                  <Font name="Courier New Bold" size="36.0" />
                </font>
             </Text>
             <ListView fx:id="list" prefHeight="450.0" prefWidth="500.0" />

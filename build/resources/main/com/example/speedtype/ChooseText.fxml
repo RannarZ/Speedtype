@@ -15,7 +15,7 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a text" textAlignment="CENTER">
                <font>
-                  <Font size="50.0" />
+                  <Font name="Courier New Bold" size="50.0" />
                </font>
             </Text>
             <ListView fx:id="list" prefHeight="400.0" prefWidth="200.0" />

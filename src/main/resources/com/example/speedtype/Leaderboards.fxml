@@ -17,9 +17,9 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Button mnemonicParsing="false" onMouseClicked="#getTextLeader" text="Texts" />
-                  <Text fx:id="header" strokeType="OUTSIDE" strokeWidth="0.0" text="Full texts" textAlignment="CENTER">
+                  <Text fx:id="header" strokeType="OUTSIDE" strokeWidth="0.0" text="Full texts" textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
-                        <Font size="50.0" />
+                        <Font name="Courier New Bold" size="50.0" />
                      </font>
                      <HBox.margin>
                         <Insets />
