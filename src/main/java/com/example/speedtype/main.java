@@ -13,7 +13,6 @@ public class main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader load = new FXMLLoader(main.class.getResource("MainMenu.fxml"));
-        System.out.println(load.getLocation());
         Scene scene = new Scene(load.load(), 700, 700);
         scene.getStylesheets().add(getClass().getResource("Stylesheets/TextStyle.css").toExternalForm());
 

@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: src.main.java.com.example.speedtype.main
-Class-Path: C:\Users\Kasutaja\Documents\Projektid\Speedtype\src\main\jav
- a\com\example\speedtype\main.java
-
