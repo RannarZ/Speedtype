@@ -12,7 +12,7 @@ repositories {
 }
 
 ext {
-    junitVersion = '5.7.1'
+    junitVersion = '5.9.2'
 }
 
 
@@ -22,7 +22,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'com.example.speedtype'
-    mainClass = 'com.example.speedtype.HelloApplication'
+    mainClass = 'com.example.speedtype.main'
 }
 
 javafx {
